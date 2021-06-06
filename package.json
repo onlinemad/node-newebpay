@@ -1,0 +1,32 @@
+{
+  "name": "node-newebpay",
+  "version": "1.0.0",
+  "description": "藍新金流 NewebPay Node.js module",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onlinemad/node-newebpay.git"
+  },
+  "keywords": [
+    "newebpay"
+  ],
+  "author": "Ian Wu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/onlinemad/node-newebpay/issues"
+  },
+  "homepage": "https://github.com/onlinemad/node-newebpay#readme",
+  "devDependencies": {
+    "chai": "^4.3.4"
+  },
+  "dependencies": {
+    "aes-js": "^3.1.2"
+  }
+}

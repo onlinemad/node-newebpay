@@ -1,0 +1,104 @@
+/* eslint-env mocha */
+
+const assert = require('chai').assert
+const NewebPay = require('../index')
+
+suite('NewebPay', () => {
+  suite('PostData', () => {
+    test('should generate PostData', async () => {
+      let key = '12345678901234567890123456789012'
+      let iv = '1234567890123456'
+      let payload = 'abcdefghijklmnop'
+      let data = await NewebPay(key, iv).TradeInfo(payload).PostData()
+      assert.equal(data, 'b91d3ece42c203729b38ae004e96efb9b64c41eeb074cad7ebafa3973181d233')
+    })
+  })
+  suite('CheckValue', () => {
+    test('should generate mpg_gateway type CheckValue', async () => {
+      let key = '1A3S21DAS3D1AS65D1'
+      let iv = '1AS56D1AS24D'
+      let trade_info = {
+        MerchantOrderNo: '20140901001',
+        MerchantID: '123456',
+        Amt: 200,
+        TimeStamp: 1403243286,
+        Version: '1.1'
+      }
+      let code = await NewebPay(key, iv).TradeInfo(trade_info).CheckValue('mpg_gateway')
+      assert.equal(code, '841F57D750FB4B04B62DDC3ECDC26F1F4028410927DD28BD5B2E34791CC434D2')
+    })
+    test('should generate QueryTradeInfo type CheckValue', async () => {
+      let key = 'abcdefg'
+      let iv = '1234567'
+      let trade_info = {
+        MerchantOrderNo: '840f022',
+        MerchantID: '1422967',
+        Amt: 100
+      }
+      let code = await NewebPay(key, iv).TradeInfo(trade_info).CheckValue('QueryTradeInfo')
+      assert.equal(code, '379BF1DB8948EE79D8ED77A1EBCB2F57B0FD45D0376B6DA9CF85F539CEF1C127')
+    })
+  })
+  suite('CheckCode', () => {
+    test('should generate CheckCode', async () => {
+      let key = 'abcdefg'
+      let iv = '1234567'
+      let trade_info = {
+        MerchantOrderNo: '840f022',
+        MerchantID: '1422967',
+        Amt: 100,
+        TradeNo: '14061313541640927'
+      }
+      let code = await NewebPay(key, iv).TradeInfo(trade_info).CheckCode()
+      assert.equal(code, '62C687AF6409E46E79769FAF54F54FE7E75AAE50BAF0767752A5C337670B8EDB')
+    })
+    test('should generate CheckCode - application/x-www-form-urlencoded encoding case', async () => {
+      let key = 'abcdefg'
+      let iv = '1234567'
+      let trade_info = {
+        MerchantID: 'ABC1422967',
+        Date: '2015-01-01 00:00:00',
+        UseInfo: 'ON',
+        CreditInst: 'ON',
+        CreditRed: 'ON'
+      }
+      let code = await NewebPay(key, iv).TradeInfo(trade_info).CheckCode()
+      assert.equal(code, '77A1EF8F23C94CB63A60A7EDF99AC3E0F4688D96AF6D4B34370D306ABD33D0F6')
+    })
+  })
+  suite('TradeInfo.encrypt', () => {
+    test('should encrypt TradeInfo to AES string', async () => {
+      let key = '12345678901234567890123456789012'
+      let iv = '1234567890123456'
+      let trade_info = {
+        MerchantID: 3430112,
+        RespondType: 'JSON',
+        TimeStamp: 1485232229,
+        Version: 1.4,
+        MerchantOrderNo: 'S_1485232229', 
+        Amt: 40,
+        ItemDesc: 'UnitTest'
+      }
+      let trade_info_aes = await NewebPay(key, iv).TradeInfo(trade_info).encrypt()
+      assert.equal(trade_info_aes, 'ff91c8aa01379e4de621a44e5f11f72e4d25bdb1a18242db6cef9ef07d80b0165e476fd1d9acaa53170272c82d122961e1a0700a7427cfa1cf90db7f6d6593bbc93102a4d4b9b66d9974c13c31a7ab4bba1d4e0790f0cbbbd7ad64c6d3c8012a601ceaa808bff70f94a8efa5a4f984b9d41304ffd879612177c622f75f4214fa')
+    })
+  })
+  suite('TradeInfo.decrypt', () => {
+    test('should decrypt AES string to TradeInfo', async () => {
+      let key = '12345678901234567890123456789012'
+      let iv = '1234567890123456'
+      let trade_info_aes = 'ff91c8aa01379e4de621a44e5f11f72e4d25bdb1a18242db6cef9ef07d80b0165e476fd1d9acaa53170272c82d122961e1a0700a7427cfa1cf90db7f6d6593bbc93102a4d4b9b66d9974c13c31a7ab4bba1d4e0790f0cbbbd7ad64c6d3c8012a601ceaa808bff70f94a8efa5a4f984b9d41304ffd879612177c622f75f4214fa'
+      let trade_info = await NewebPay(key, iv).TradeInfo(trade_info_aes).decrypt()
+      assert.equal(trade_info, 'MerchantID=3430112&RespondType=JSON&TimeStamp=1485232229&Version=1.4&MerchantOrderNo=S_1485232229&Amt=40&ItemDesc=UnitTest')
+    })
+  })
+  suite('TradeSha', () => {
+    test('should generate TradeSha from TradeInfo', async () => {
+      let key = '12345678901234567890123456789012'
+      let iv = '1234567890123456'
+      let aes = 'ff91c8aa01379e4de621a44e5f11f72e4d25bdb1a18242db6cef9ef07d80b0165e476fd1d9acaa53170272c82d122961e1a0700a7427cfa1cf90db7f6d6593bbc93102a4d4b9b66d9974c13c31a7ab4bba1d4e0790f0cbbbd7ad64c6d3c8012a601ceaa808bff70f94a8efa5a4f984b9d41304ffd879612177c622f75f4214fa'
+      let trade_sha = await NewebPay(key, iv).TradeInfo(aes).TradeSha()
+      assert.equal(trade_sha, 'EA0A6CC37F40C1EA5692E7CBB8AE097653DF3E91365E6A9CD7E91312413C7BB8')
+    })
+  })
+})
