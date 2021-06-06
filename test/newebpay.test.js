@@ -14,6 +14,17 @@ suite('NewebPay', () => {
     })
   })
   suite('CheckValue', () => {
+    test('should generate QueryTradeInfo type CheckValue', async () => {
+      let key = 'abcdefg'
+      let iv = '1234567'
+      let trade_info = {
+        MerchantOrderNo: '840f022',
+        MerchantID: '1422967',
+        Amt: 100
+      }
+      let code = await NewebPay(key, iv).TradeInfo(trade_info).CheckValue()
+      assert.equal(code, '379BF1DB8948EE79D8ED77A1EBCB2F57B0FD45D0376B6DA9CF85F539CEF1C127')
+    })
     test('should generate mpg_gateway type CheckValue', async () => {
       let key = '1A3S21DAS3D1AS65D1'
       let iv = '1AS56D1AS24D'
@@ -26,17 +37,6 @@ suite('NewebPay', () => {
       }
       let code = await NewebPay(key, iv).TradeInfo(trade_info).CheckValue('mpg_gateway')
       assert.equal(code, '841F57D750FB4B04B62DDC3ECDC26F1F4028410927DD28BD5B2E34791CC434D2')
-    })
-    test('should generate QueryTradeInfo type CheckValue', async () => {
-      let key = 'abcdefg'
-      let iv = '1234567'
-      let trade_info = {
-        MerchantOrderNo: '840f022',
-        MerchantID: '1422967',
-        Amt: 100
-      }
-      let code = await NewebPay(key, iv).TradeInfo(trade_info).CheckValue('QueryTradeInfo')
-      assert.equal(code, '379BF1DB8948EE79D8ED77A1EBCB2F57B0FD45D0376B6DA9CF85F539CEF1C127')
     })
   })
   suite('CheckCode', () => {
