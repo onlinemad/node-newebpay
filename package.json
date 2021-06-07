@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/newebpay.test.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   "keywords": [
     "newebpay"
   ],
-  "author": "Ian Wu",
+  "author": "Ian Wu <onlinemad@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/onlinemad/node-newebpay/issues"
