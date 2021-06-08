@@ -34,7 +34,7 @@ let trade_info = {
   Amt: 40,
   ItemDesc: 'UnitTest'
 }
-let trade_info_aes = await NewebPay(key, iv).TradeInfo(trade_info).encrypt()
+let trade_info_aes = NewebPay(key, iv).TradeInfo(trade_info).encrypt()
 console.log(trade_info_aes) //  ff91c8aa01379e4de621a44e5f11f72e4d25bdb1a18242db6cef9ef07d80b0165e476fd1d9acaa53170272c82d122961e1a0700a7427cfa1cf90db7f6d6593bbc93102a4d4b9b66d9974c13c31a7ab4bba1d4e0790f0cbbbd7ad64c6d3c8012a601ceaa808bff70f94a8efa5a4f984b9d41304ffd879612177c622f75f4214fa
 ```
 
@@ -48,7 +48,7 @@ const NewebPay = require('node-newebpay')
 let key = '12345678901234567890123456789012'
 let iv = '1234567890123456'
 let trade_info_aes = 'ff91c8aa01379e4de621a44e5f11f72e4d25bdb1a18242db6cef9ef07d80b0165e476fd1d9acaa53170272c82d122961e1a0700a7427cfa1cf90db7f6d6593bbc93102a4d4b9b66d9974c13c31a7ab4bba1d4e0790f0cbbbd7ad64c6d3c8012a601ceaa808bff70f94a8efa5a4f984b9d41304ffd879612177c622f75f4214fa'
-let trade_info = await NewebPay(key, iv).TradeInfo(trade_info_aes).decrypt()
+let trade_info = NewebPay(key, iv).TradeInfo(trade_info_aes).decrypt()
 
 console.log(trade_info) // MerchantID=3430112&RespondType=JSON&TimeStamp=1485232229&Version=1.4&MerchantOrderNo=S_1485232229&Amt=40&ItemDesc=UnitTest
 ```
@@ -63,7 +63,7 @@ const NewebPay = require('node-newebpay')
 let key = '12345678901234567890123456789012'
 let iv = '1234567890123456'
 let aes = 'ff91c8aa01379e4de621a44e5f11f72e4d25bdb1a18242db6cef9ef07d80b0165e476fd1d9acaa53170272c82d122961e1a0700a7427cfa1cf90db7f6d6593bbc93102a4d4b9b66d9974c13c31a7ab4bba1d4e0790f0cbbbd7ad64c6d3c8012a601ceaa808bff70f94a8efa5a4f984b9d41304ffd879612177c622f75f4214fa'
-let trade_sha = await NewebPay(key, iv).TradeInfo(aes).TradeSha()
+let trade_sha = NewebPay(key, iv).TradeInfo(aes).TradeSha()
 console.log(trade_sha) // EA0A6CC37F40C1EA5692E7CBB8AE097653DF3E91365E6A9CD7E91312413C7BB8
 ```
 
@@ -83,7 +83,7 @@ let trade_info = {
   MerchantID: '1422967',
   Amt: 100
 }
-let code = await NewebPay(key, iv).TradeInfo(trade_info).CheckValue('QueryTradeInfo')
+let code = NewebPay(key, iv).TradeInfo(trade_info).CheckValue('QueryTradeInfo')
 
 console.log(code) // 379BF1DB8948EE79D8ED77A1EBCB2F57B0FD45D0376B6DA9CF85F539CEF1C127
 ```
@@ -100,7 +100,7 @@ const NewebPay = require('node-newebpay')
 let key = '12345678901234567890123456789012'
 let iv = '1234567890123456'
 let payload = 'abcdefghijklmnop'
-let data = await NewebPay(key, iv).TradeInfo(payload).PostData()
+let data = NewebPay(key, iv).TradeInfo(payload).PostData()
 
 console.log(data) // b91d3ece42c203729b38ae004e96efb9b64c41eeb074cad7ebafa3973181d233
 ```
@@ -122,6 +122,6 @@ let trade_info = {
   Amt: 100,
   TradeNo: '14061313541640927'
 }
-let code = await NewebPay(key, iv).TradeInfo(trade_info).CheckCode()
+let code = NewebPay(key, iv).TradeInfo(trade_info).CheckCode()
 console.log(code) // 62C687AF6409E46E79769FAF54F54FE7E75AAE50BAF0767752A5C337670B8EDB
 ```
