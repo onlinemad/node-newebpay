@@ -109,11 +109,15 @@ let data = NewebPay(key, iv).TradeInfo(payload).PostData()
 console.log(data) // b91d3ece42c203729b38ae004e96efb9b64c41eeb074cad7ebafa3973181d233
 ```
 
-### TradeInfo(payload).CheckCode()
+### TradeInfo(payload).CheckCode(type?)
 
 將交易資料透過 SHA256 編碼產生檢查碼。
 
 其實同 `TradeInfo(trade_info).CheckValue()` 只是幕後授權 API 用 `CheckCode` 作為欄位的名稱，同時欄位排列不同。
+
+#### 1.3.1 增加 winning_request type
+
+因為查詢中獎發票 API（https://inv.ezpay.com.tw/Api_winning/request）所使用的 CheckCode 又有不同的排列方式，所以增加 type 來支援這個 API。
 
 ```js
 const NewebPay = require('node-newebpay')

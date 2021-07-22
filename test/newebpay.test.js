@@ -72,6 +72,13 @@ suite('NewebPay', () => {
       let code = NewebPay(key, iv).TradeInfo(trade_info).CheckCode()
       assert.equal(code, '77A1EF8F23C94CB63A60A7EDF99AC3E0F4688D96AF6D4B34370D306ABD33D0F6')
     })
+    test('should generate winning_request type CheckCode', () => {
+      let key = 'abcdefghijklmnopqrstuvwxyzabcdef'
+      let iv = '1234567891234567'
+      let trade_info = '8ca0b6c96c30c5dc8d688491f60b6fec2c1e0436c16ccef38bac03e48b5f720c43f37524cf84de0f4d68f0836ea8b8b658d60e85313ab7895e704f52e8e6cd45432016083ddaf8ffa3708387833643f388a9593a2d9ea4220c6450a7c9d7ac4f5baaf1f29b1bcb6a7f754ca17739429314e1fd0ffd3e0f57cc01b89587a3965da9eeae7b8c7add142dbb9f1c79968e4a688869f1c342a401dc46e5b4899301941cb0e2c7f97be13aac25c57d5a59b822529b576738abbbb87a44c1d84d74f0e87dd5c3537d09a941176a5d38aaa9e4286f5f25418d189fd63554f3ed8d7e12a74c419c17b0359160f180dc4e3d8bb14236a5891efdf77da65a94864a417fb4934824c2c7ffb59df9db7cd5d0d1140d8a4447793b456cc9419c44f32e070815ed'
+      let code = NewebPay(key, iv).TradeInfo(trade_info).CheckCode('winning_request')
+      assert.equal(code, 'C8E76E4FBB29BEA8C631702FFFC9C92DA2F07205B79F4F497F0259F2041C578F')
+    })
   })
   suite('TradeInfo.encrypt', () => {
     test('should encrypt TradeInfo to AES string', () => {
