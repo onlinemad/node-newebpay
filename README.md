@@ -71,7 +71,11 @@ console.log(trade_sha) // EA0A6CC37F40C1EA5692E7CBB8AE097653DF3E91365E6A9CD7E913
 
 將交易資料透過 SHA256 編碼產生檢查碼。
 
-這個 function 可接受一個 type 參數來改變交易參數的排列，預設產生的 CheckValue 根據交易狀態查詢 API (https://core.newebpay.com/API/QueryTradeInfo) 所設計的，但是藍新金流付款的 API (https://core.spgateway.com/MPG/mpg_gateway) 在版本 1.2 之前是使用 CheckValue 來作為檢查碼，所以增加 type 來作為 backward compatibility ，目前藍新金流付款 API 版本 1.6 則不再使用 CheckValue 作為檢查碼的用途
+這個 function 可接受一個 type 參數來改變交易參數的排列，預設產生的 CheckValue 根據交易狀態查詢 API (https://core.newebpay.com/API/QueryTradeInfo) 所設計的，但是藍新金流付款的 API (https://core.spgateway.com/MPG/mpg_gateway) 在版本 1.2 之前是使用 CheckValue 來作為檢查碼，所以增加 type 來作為 backward compatibility ，目前藍新金流付款 API 版本 1.6 則不再使用 CheckValue 作為檢查碼的用途。
+
+#### 1.3 增加 winning_request type
+
+因為查詢中獎發票 API（https://inv.ezpay.com.tw/Api_winning/request）所使用的 CheckValue 又有不同的排列方式，所以增加 type 來支援這個 API。
 
 ```js
 const NewebPay = require('node-newebpay')
