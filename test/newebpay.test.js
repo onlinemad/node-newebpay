@@ -38,7 +38,7 @@ suite('NewebPay', () => {
       let code = NewebPay(key, iv).TradeInfo(trade_info).CheckValue('mpg_gateway')
       assert.equal(code, '841F57D750FB4B04B62DDC3ECDC26F1F4028410927DD28BD5B2E34791CC434D2')
     })
-    test.only('should generate winning_request type CheckValue', () => {
+    test('should generate winning_request type CheckValue', () => {
       let key = 'abcdefghijklmnopqrstuvwxyzabcdef'
       let iv = '1234567891234567'
       let trade_info = 'ff1f87895354452f58172e460f554fa85f479ed891fcd358b1e37600fbde032bde5577c672814c42653b6c921e931857c69a2b76ce6cb5f1d78ae260e8343c89'
