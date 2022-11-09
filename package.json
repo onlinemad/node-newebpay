@@ -1,6 +1,6 @@
 {
   "name": "node-newebpay",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "藍新金流 NewebPay Node.js module",
   "main": "index.js",
   "directories": {
