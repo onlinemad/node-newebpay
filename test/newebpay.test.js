@@ -79,6 +79,19 @@ suite('NewebPay', () => {
       let code = NewebPay(key, iv).TradeInfo(trade_info).CheckCode('winning_request')
       assert.equal(code, 'C8E76E4FBB29BEA8C631702FFFC9C92DA2F07205B79F4F497F0259F2041C578F')
     })
+    test('should generate invoice_number type CheckCode', () => {
+      let key = 'abcdefghijklmnopqrstuvwxyzabcdef'
+      let iv = '1234567891234567'
+      let trade_info = {
+        AphabeticLetter: 'AA',
+        CompanyId: 'C54352706',
+        EndNumber: '00000001',
+        ManagementNo: '0o455ujp8',
+        StartNumber: '00000050'
+      }
+      let code = NewebPay(key, iv).TradeInfo(trade_info).CheckCode('invoice_number')
+      assert.equal(code, '5F9F7ABDE032F78CCDF3E4FB8A53D80A09190846D906DA84B26A105857AB2490')
+    })
   })
   suite('TradeInfo.encrypt', () => {
     test('should encrypt TradeInfo to AES string', () => {
